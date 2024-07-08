@@ -1,5 +1,5 @@
 # BountyChecker
-A tool to check Cetus Bounties in Real Time
+A tool to check Cetus Bounties in Real Time on MacOS
 
 # How does this work?
 It reads and parses your EE.log
@@ -8,22 +8,23 @@ It reads and parses your EE.log
 Short Answer is: no.
 Long Answer is: The Scripts parse EE.log, the logfile where Warframe logs all sorts of stuff, also bounty stages. A lot of 3rd parts Apps (such as YATE, Alecaframe and PTAnalyzer) use this to work. So far I am not aware of anyone being banned, but use at your own risk as any other program. 
 
-# It shows up as a Virus?!?
-Unfortunately, this is how it currently is. The source code is freely avaible here though and you can choose to check it and modify it as you please.
+# Changes
+Changed the directory on warframe ee.log file location and commented out the pyttsx3 libraries as they were causing issues on MacOS
 
-# Why are there two versions?
-One version sends good bounties to us through a Discord Webhook. That way everyone can benefit from good bounties. The other version does not - choose whichever you like (though ofc we hope for people actively sharing their bounties). 
+# Setup
+Download repository as a zip
+Extract
+Open Crossover or wine bottle's C: Drive folder
+Navigate to Users > Crossover (default username, unless you changed it) > AppData > Warframe > Copy EE.log file path by holding down the option key
+Open `BountyChecker.py` with TextEditor or IDE of your choice
+Replace path on Line 51
 
-# What does it send?
-It sends some Game Data, thats all. No IP Adress or Username or anything:
-```/Lotus/Types/Gameplay/Eidolon/Jobs/SabotageBountySab/Lotus/Types/Gameplay/Eidolon/Jobs/ReclamationBountyCap```
-```SolNode228_HUB```
-```/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierETableCRewards ```
-```/Lotus/Types/Gameplay/Eidolon/Jobs/ReclamationBountyCap_-4_CetusHub4_65b1683b0000000000000008_TentB```
-```['/Lotus/Types/Gameplay/Eidolon/Encounters/DynamicRescue', '/Lotus/Types/Gameplay/Eidolon/Encounters/DynamicAssassinate', '/Lotus/Types/Gameplay/Eidolon/Encounters/HiddenResourceCaches', '/Lotus/Types/Gameplay/Eidolon/Encounters/DynamicHijack', '/Lotus/Types/Gameplay/Eidolon/Encounters/DynamicCapture']```
 
 # How to get the .py working?
-Install Python 3.11 (this is what is has been tested on, may work on lower versions too). Then do `py -m pip install -r requirements.txt` in the folder.
+Install Python 3.12.4 (this is what is has been tested on, may work on lower versions too). Then do `py -m pip install -r requirements.txt` in the folder.
+Run via VS Code or Terminal 
 
-# Will this get updates?
-Yes
+# Issues
+Will not work when playing on Fullscreen/Windowed Fullscreen **MUST** be in Windowed mode for the overlay to show up due to how crossover bottles work or have to use a second monitor if you want to play on Fullscreen/Windowed Fullscreen
+using pyttsx3 crashes the window so no narration
+I will be working on a fix on both of these issues as well as compiling this into a simple script so its easier to install
