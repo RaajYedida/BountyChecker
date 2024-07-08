@@ -1,4 +1,4 @@
-# BountyChecker
+# WFBountyCheckerMacOS
 A tool to check Cetus Bounties in Real Time on MacOS
 
 # How does this work?
