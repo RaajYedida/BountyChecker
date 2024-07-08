@@ -29,3 +29,6 @@ Run via VS Code or Terminal
 - using pyttsx3 crashes the window so no narration
 
 I will be working on a fix on both of these issues as well as compiling this into a simple script so its easier to install
+
+# Credit
+All credit goes to @ManInTheWallPog for the original file, I just changed the directory information so that it works on MacOS
