@@ -2,7 +2,7 @@ import logging
 import os
 import time
 import tkinter as tk
-import pyttsx3
+#import pyttsx3
 import json
 import threading
 import requests
@@ -48,7 +48,7 @@ class OverlayApp:
 
         self.logger = setup_custom_logger('Aya Bounty Tracker')
         
-        self.path = os.getenv('LOCALAPPDATA') + "/Warframe/EE.log"
+        self.path = os.path.expanduser('~/Library/Application Support/CrossOver/Bottles/Warframe Steam/drive_c/users/crossover/AppData/Local/Warframe/EE.log')
         self.first_run = True
         self.last_line_index = 0
         wanted_bounties = requests.get("https://gist.githubusercontent.com/ManInTheWallPog/d9cc2c83379a74ef57f0407b0d84d9b2/raw/")
@@ -101,7 +101,7 @@ class OverlayApp:
         last_access = 0
         last_line_index  = 0
         
-        tts = pyttsx3.init()
+        #tts = pyttsx3.init()
         while True:
             try:
                 checkaccesstime = os.path.getmtime(self.path)
@@ -118,15 +118,15 @@ class OverlayApp:
                         self.first_run = False
                         text = "Waiting for bounty"
                         self.update_overlay(text, "white")
-                        tts.say(text)
-                        tts.runAndWait()
+                        #tts.say(text)
+                        #tts.runAndWait()
                         
                         with open(self.path, 'r', encoding="utf-8") as f:
                             lines = f.readlines()
                             for line in lines:
                                 last_line_index = f.tell()
                         continue
-                    parse_success = self.parse_lines(data, tts)
+                    parse_success = self.parse_lines(data)
                     if parse_success:
                         last_line_index = current_last_index
                 time.sleep(0.5)
@@ -159,7 +159,7 @@ class OverlayApp:
                 current_last_index = f.tell()
         return lines, current_last_index
 
-    def parse_lines(self, data, tts):
+    def parse_lines(self, data):  # Removed tts parameter
         for i in range(len(data)):
             line_data = self.lstring(data[i], ' ')
             try:
@@ -180,15 +180,15 @@ class OverlayApp:
                         if json_data.get("isHardJob") == "True":
                             self.update_overlay("Wrong Tier", "red")
                             text = "Wrong tier, Bounty is Steel Path"
-                            tts.say(text)
-                            tts.runAndWait()
+                            #tts.say(text)
+                            #tts.runAndWait()
                             return True
 
                         if json_data['jobTier'] != 4:
                             self.update_overlay("Wrong Tier", "red")
                             text = (f"Wrong tier, tier is {str(json_data['jobTier'])}")
-                            tts.say(text)
-                            tts.runAndWait()
+                            #tts.say(text)
+                            #tts.runAndWait()
 
                             return True
 
@@ -199,8 +199,8 @@ class OverlayApp:
                                 self.logger.info(stages_string)
                                 self.update_overlay(stages_string, "red")
                                 self.logger.info("Bad Bounty")
-                                tts.say("Bad Bounty")
-                                tts.runAndWait()
+                                #tts.say("Bad Bounty")
+                                #tts.runAndWait()
                                 return True
                             except Exception as e:
                                 self.logger.error(f"Please Report this String: {e}")
@@ -213,17 +213,8 @@ class OverlayApp:
                     self.update_overlay(stages_string, "green")
                     self.logger.info(stages_string)
                     self.logger.info("Good Bounty")
-                    tts.say("Good Bounty")
-                    tts.runAndWait()
-                    #The following lines are what the Webhook is sending in case you wonder. Leave this commented out
-                    """try: 
-                        if json_data['job'] == "ReclamationBountyCap" or json_data['job'] == "ReclamationBountyCache":
-                            if json_data["jobTier"] == 4:
-                                text = f"```{json_data['jobLevelGenerationSeed']}{json_data['job']}\n{json_data['name']}\n{json_data['jobReward']} \n{json_data['jobId']}\n{json_data['jobStages']}```"
-                                webhook = DiscordWebhook(url=desti, content=text)
-                                webhook.execute()
-                    except:
-                        pass"""
+                    #tts.say("Good Bounty")
+                    #tts.runAndWait()
                     return True
 
             except Exception as e:
@@ -233,3 +224,4 @@ if __name__ == "__main__":
     
     app = OverlayApp()
     app.run()
+    
